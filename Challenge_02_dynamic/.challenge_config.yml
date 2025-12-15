@@ -1,0 +1,25 @@
+type: dynamic
+description: |
+  This is a basic example for **dynamic challenge**. Follow these steps:
+
+  1. Start an Android emulator.
+  2. Install the dummy app with adb
+  3. Launch the app on the emulator and use it to complete the challenge.
+  
+  > **Note**: Emulator properties checks are invalid if the emulator in the base image is changed.
+server_verification:
+  pipeline:
+    - step: 1
+      rule_type: "property"
+      description: "Validate emulator properties"
+      config:
+        step_name: "device_check"
+        properties:
+          - property: "ro.product.model"
+            expected_value: "Android SDK built for x86_64"
+
+          - property: "ro.product.manufacturer"
+            expected_value: "unknown"
+
+          - property: "ro.build.version.sdk"
+            expected_value: "35"
