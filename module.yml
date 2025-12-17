@@ -1,6 +1,6 @@
 name: Example Mobsec Module
 challenges:
-  - id: 01_static
+  - id: Challenge_01_static
     name: Static Example
-  - id: 02_dynamic
+  - id: Challenge_02_dynamic
     name: Dynamic Example

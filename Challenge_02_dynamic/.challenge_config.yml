@@ -8,41 +8,31 @@ description: |
   3. Launch the app on the emulator and use it to complete the challenge.
   
   > **Note**: Emulator properties checks are invalid if the emulator in the base image is changed.
-server_verification:
-  pipeline:
-    - step: 1
-      rule_type: "property"
-      description: "Validate emulator properties"
-      config:
-        step_name: "device_check"
-        properties:
-          - property: "ro.product.model"
-            expected_value: "sdk_gphone64_arm64"
 
-          - property: "ro.product.manufacturer"
-            expected_value: "Google"
+rules:
+  - name: "device_check"
+    type: "property"
+    description: "Validate emulator properties"
+    properties:
+      - property: "ro.product.model"
+        expected_value: "sdk_gphone64_arm64"
+      - property: "ro.product.manufacturer"
+        expected_value: "Google"
+      - property: "ro.build.version.sdk"
+        expected_value: "35"
+  
+  - name: "log_check_1"
+    type: "log"
+    description: "Check for specific log entry from the app"
+    log_entries:
+      - "Log Example!"
 
-          - property: "ro.build.version.sdk"
-            expected_value: "35"
-    
-    - step: 2
-      rule_type: "log"
-      description: "Check for specific log entry from the app"
-      config:
-        step_name: "log_check_1"
-        log_entries:
-          - "Log Example!"
+  - name: "log_check_2"
+    type: "log"
+    description: "Check for a second log entry from the app"
+    log_entries:
+      - "Log Example 2!"
 
-    - step: 3
-      rule_type: "log"
-      description: "Check for a second log entry from the app"
-      config:
-        step_name: "log_check_2"
-        log_entries:
-          - "Log Example 2!"
-
-    - step: 4
-      rule_type: "manual"
-      description: "Manual verification step"
-      config:
-        step_name: "manual_example"
+  - name: "manual_example"
+    type: "manual"
+    description: "Manual verification step"
