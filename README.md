@@ -26,9 +26,8 @@
 ```bash
 docker run -it --network host \
   -v "$(pwd):/challenge" \
-  -w /challenge \
   ghcr.io/s-solom/daddel:dev \
-  --config examples/dynamic.config.yml --debug
+  --config /challenge/my-config.yml --debug
 ````
 
 - `--config`: Pfad zur Config-Datei **relativ zum aktuellen Verzeichnis**, da `$(pwd)` nach `/challenge` gemountet wird.
