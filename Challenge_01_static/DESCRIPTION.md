@@ -1,1 +1,0 @@
-> Challenge Beschreibung, die in der Weboberfläche dargestellt wird

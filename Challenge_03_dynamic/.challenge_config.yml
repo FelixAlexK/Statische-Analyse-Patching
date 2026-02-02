@@ -1,0 +1,38 @@
+id: test/dynamic_manual
+type: dynamic
+description: |
+  This is a basic example for **dynamic challenge**. Follow these steps:
+
+  1. Start an Android emulator.
+  2. Install the dummy app with adb
+  3. Launch the app on the emulator and use it to complete the challenge.
+  
+  > **Note**: Emulator properties checks are invalid if the emulator in the base image is changed.
+
+rules:
+  - name: "device_check"
+    type: "property"
+    description: "Validate emulator properties"
+    properties:
+      - property: "ro.product.model"
+        expected_value: "sdk_gphone64_arm64"
+      - property: "ro.product.manufacturer"
+        expected_value: "Google"
+      - property: "ro.build.version.sdk"
+        expected_value: "35"
+  
+  - name: "log_check_1"
+    type: "log"
+    description: "Check for specific log entry from the app"
+    log_entries:
+      - "Log Example!"
+
+  - name: "log_check_2"
+    type: "log"
+    description: "Check for a second log entry from the app"
+    log_entries:
+      - "Log Example 2!"
+
+  - name: "manual_example"
+    type: "manual"
+    description: "Manual verification step"

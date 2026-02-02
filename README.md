@@ -2,8 +2,8 @@
 
 
 **Mitglieder:**
-* Ghinea, Iulia Maria (Matrikelnummer)
-* Widmann, Simon (Matrikelnummer) 
+* Ghinea, Iulia Maria (209029)
+* Widmann, Simon (216071) 
 * Kuhbier, Felix (212115)
 
 ## Der Rote Faden
