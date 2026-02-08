@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">dojo dummy</string>
+    <string name="secret_part_2">college_</string>
 </resources>

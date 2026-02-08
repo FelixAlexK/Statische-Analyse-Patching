@@ -1,36 +1,19 @@
 package de.hhn.dojo.dummy.ui.screens
 
-import android.os.Build
+import android.content.pm.PackageManager
 import android.util.Log
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.filled.Flag
-import androidx.compose.material.icons.outlined.Devices
-import androidx.compose.material.icons.outlined.LockOpen
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.hhn.dojo.dummy.LocalSnackbarHostState
@@ -45,6 +28,11 @@ fun MainScreen(
 ) {
     val verificationState by verificationViewModel.verificationUiState.collectAsState()
     val snackbarHostState = LocalSnackbarHostState.current
+    val context = LocalContext.current
+
+    // State für die Eingabefelder
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = verificationViewModel.snackbarMessages, key2 = snackbarHostState) {
         verificationViewModel.snackbarMessages.collectLatest { message ->
@@ -55,163 +43,112 @@ fun MainScreen(
         }
     }
 
+    // Flag-Dialog Handling (bleibt gleich)
     when (val state = verificationState) {
         is VerificationUiState.FlagSuccess -> {
             FlagDialog(
                 onDismiss = { verificationViewModel.resetState() },
                 title = "Flag Retrieved!",
                 icon = Icons.Filled.Flag,
-                bodyText = "You have successfully completed the task.",
+                bodyText = "You have successfully patched the logic.",
                 flagToDisplay = state.flag,
                 onFlagCopied = {
                     verificationViewModel.sendSnackbarMessage("Flag copied to clipboard!")
                 }
             )
         }
-
-        is VerificationUiState.MessageSuccess -> {
-            LaunchedEffect(state) {
-                snackbarHostState.showSnackbar(
-                    message = state.message,
-                    duration = SnackbarDuration.Short
-                )
-                verificationViewModel.resetState()
-            }
-        }
-
-        is VerificationUiState.Error -> {
-            LaunchedEffect(state) {
-                snackbarHostState.showSnackbar(
-                    message = state.message,
-                    duration = SnackbarDuration.Long
-                )
-                verificationViewModel.resetState()
-            }
-        }
-
-        else -> {
-            /* Idle or Loading */
-        }
+        else -> { /* Error/Message handling logic here if needed */ }
     }
 
     Column(
         modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LinearProgressIndicator(
             modifier = Modifier
                 .fillMaxWidth()
                 .alpha(if (verificationState is VerificationUiState.Loading) 1f else 0f)
         )
-        MainActions(
-            onGetDynamicFlagPlain = { verificationViewModel.requestFlag() },
-            onGetDynamicFlagEncrypted = { verificationViewModel.triggerDynamicFlagRequestEncrypted() },
-            onVerifyEmulatorProperties = {
-                val propertiesToSend = mapOf(
-                    "ro.product.model" to Build.MODEL,
-                    "ro.product.manufacturer" to Build.MANUFACTURER,
-                    "ro.build.version.sdk" to Build.VERSION.SDK_INT.toString()
-                )
-                verificationViewModel.submitEmulatorProperties(
-                    propertiesToSend = propertiesToSend,
-                    targetRuleName = "emulator_properties_check"
-                )
-            },
-            onVerifyLogMessage = {
-                Log.d("onVerifyLogMessage", "Log Example!")
-            },
-            onVerifyManual = {
-                Log.d("onVerifyManual", "Log Example 2!")
-                verificationViewModel.sendManualRuleSignal("manual_example")
-            }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Text(
+            text = "Code Anatomy Login",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(bottom = 24.dp)
         )
+
+        // Username Feld
+        OutlinedTextField(
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("Username") },
+            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+            modifier = Modifier.fillMaxWidth(0.8f).padding(bottom = 16.dp)
+        )
+
+        // Password Feld
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth(0.8f).padding(bottom = 24.dp)
+        )
+
+        // Login Button
+        Button(
+            onClick = {
+                checkLogin(username, password, context, verificationViewModel)
+            },
+            modifier = Modifier.fillMaxWidth(0.8f).height(50.dp)
+        ) {
+            Text("Unlock System")
+        }
     }
 }
 
-@Composable
-fun MainActions(
-    onGetDynamicFlagPlain: () -> Unit,
-    onGetDynamicFlagEncrypted: () -> Unit,
-    onVerifyEmulatorProperties: () -> Unit,
-    onVerifyLogMessage: () -> Unit,
-    onVerifyManual: () -> Unit,
-    modifier: Modifier = Modifier
+/**
+ * Die Logik für die Code-Anatomy Challenge
+ */
+private fun checkLogin(
+    userIn: String,
+    passIn: String,
+    context: android.content.Context,
+    viewModel: VerificationViewModel
 ) {
-    Column(
-        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-    ) {
-        ActionItem(
-            title = "Get Flag",
-            description = "Demo for unencrypted flag",
-            icon = Icons.Outlined.LockOpen,
-            onClick = onGetDynamicFlagPlain,
+    try {
+        // SCHRITT 1: Teil aus dem Manifest holen (Statischer Teil 1)
+        val ai = context.packageManager.getApplicationInfo(
+            context.packageName,
+            PackageManager.GET_META_DATA
         )
-        HorizontalDivider(Modifier.padding(16.dp))
-        ActionItem(
-            title = "Rule: Emulator Properties",
-            description = "Trigger emulator rule verification event",
-            icon = Icons.Outlined.Devices,
-            onClick = onVerifyEmulatorProperties,
-        )
-        ActionItem(
-            title = "Rule: Logcat",
-            description = "Trigger logcat rule verification event",
-            icon = Icons.AutoMirrored.Outlined.Message,
-            onClick = onVerifyLogMessage,
-        )
-        ActionItem(
-            title = "Rule: Manual",
-            description = "Trigger manual rule verification event",
-            icon = Icons.AutoMirrored.Outlined.Message,
-            onClick = onVerifyManual,
-        )
-    }
-}
+        val part1 = ai.metaData.getString("secret_part_1") ?: ""
 
-@Composable
-fun ActionItem(
-    title: String,
-    description: String?,
-    icon: ImageVector?,
-    onClick: (() -> Unit)?,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .padding(bottom = 8.dp),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-    ) {
-        ListItem(
-            modifier = Modifier
-                .then(
-                    if (onClick != null) {
-                        Modifier.clickable(onClick = onClick)
-                    } else {
-                        Modifier
-                    }
-                ),
-            headlineContent = { Text(text = title) },
-            supportingContent = description?.let { { Text(text = it) } },
-            leadingContent = icon?.let {
-                {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = title
-                    )
-                }
-            },
-            colors = ListItemDefaults.colors(
-                containerColor = Color.Transparent
-            )
-        )
-    }
-}
+        // SCHRITT 2: Teil aus den Strings holen (Statischer Teil 2)
+        // Hinweis: Die ID R.string.secret_part_2 muss in res/values/strings.xml existieren
+        val part2Id = context.resources.getIdentifier("secret_part_2", "string", context.packageName)
+        val part2 = if (part2Id != 0) context.getString(part2Id) else ""
 
-@Preview
-@Composable
-private fun MainScreenPreview() {
-    MainScreen()
+        // SCHRITT 3: Hartcodierter Teil (Statischer Teil 3)
+        val part3 = "anatomy"
+
+        val correctPassword = part1 + part2 + part3
+        val correctUser = "admin" // Kannst du auch verstecken
+
+        if (userIn == correctUser && passIn == correctPassword) {
+            // VERIFIZIERUNG: Dieser Log wird vom externen Tool gelesen
+            Log.d("ChallengeVerify", "AUTH_SUCCESS_FULL_PIECES")
+
+            // Trigger das ViewModel, um die Flagge anzuzeigen (z.B. über API oder intern)
+            viewModel.requestFlag()
+        } else {
+            Log.w("ChallengeVerify", "AUTH_FAILED: Access Denied.")
+            viewModel.sendSnackbarMessage("Invalid Credentials! Check the code anatomy.")
+        }
+
+    } catch (e: Exception) {
+        Log.e("ChallengeVerify", "Error during decryption: ${e.message}")
+    }
 }

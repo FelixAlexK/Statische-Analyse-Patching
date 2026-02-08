@@ -18,7 +18,7 @@ fun AppBar(modifier: Modifier = Modifier) {
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         title = {
-            Text("dojo dummy")
+            Text("Code Anatomy Challenge")
         }
     )
 }
