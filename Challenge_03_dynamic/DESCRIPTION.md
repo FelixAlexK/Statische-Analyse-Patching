@@ -1,1 +1,0 @@
-> Challengebeschreibung die in der Weboberfläche angezeigt wird
