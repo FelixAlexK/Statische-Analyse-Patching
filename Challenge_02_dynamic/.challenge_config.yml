@@ -10,29 +10,19 @@ description: |
   > **Note**: Emulator properties checks are invalid if the emulator in the base image is changed.
 
 rules:
-  - name: "device_check"
-    type: "property"
-    description: "Validate emulator properties"
-    properties:
-      - property: "ro.product.model"
-        expected_value: "sdk_gphone64_arm64"
-      - property: "ro.product.manufacturer"
-        expected_value: "Google"
-      - property: "ro.build.version.sdk"
-        expected_value: "35"
+#  - name: "device_check"
+#    type: "property"
+#    description: "Validate emulator properties"
+#    properties:
+#      - property: "ro.product.model"
+#        expected_value: "sdk_gphone64_arm64"
+#      - property: "ro.product.manufacturer"
+#        expected_value: "Google"
+#      - property: "ro.build.version.sdk"
+#        expected_value: "36"
   
-  - name: "log_check_1"
+  - name: "bypass_check"
     type: "log"
     description: "Check for specific log entry from the app"
     log_entries:
-      - "Log Example!"
-
-  - name: "log_check_2"
-    type: "log"
-    description: "Check for a second log entry from the app"
-    log_entries:
-      - "Log Example 2!"
-
-  - name: "manual_example"
-    type: "manual"
-    description: "Manual verification step"
+      - "BYPASS_DETECTED_SUCCESS"
