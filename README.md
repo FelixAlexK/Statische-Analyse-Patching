@@ -1,21 +1,19 @@
-# Gruppen-Manifest: Code Anatomy – Statische Analyse & Patching
+# Gruppen-Manifest: Statische Analyse & Patching
 
 
 **Mitglieder:**
-* Ghinea, Iulia Maria (209029)
 * Widmann, Simon (216071) 
 * Kuhbier, Felix (212115)
 
 ## Der Rote Faden
-*Die drei Challenges verfolgen das gemeinsame Lernziel, Studierende schrittweise an die statische Analyse und gezieltes Patching von Android-APKs heranzuführen. In der ersten Challenge lernen sie die grundlegende Struktur einer APK kennen und setzen einen einfachen Smali-Patch, um ein gesperrtes Feature freizuschalten. Darauf aufbauend fokussiert sich die zweite Challenge auf die Analyse von Entscheidungs- und Lizenzlogik, bei der Rückgabewerte über mehrere Klassen hinweg nachvollzogen und manipuliert werden müssen. Die dritte Challenge erweitert dieses Wissen um den Aspekt der internen Zustandskonsistenz, bei dem mehrere abhängige Statuswerte gemeinsam betrachtet und korrekt angepasst werden müssen. Die Reihenfolge ist didaktisch sinnvoll, da sie von strukturellem Verständnis über logische Entscheidungen hin zu architektonischem Denken führt. Jede Challenge verwendet ähnliche Werkzeuge, erhöht jedoch gezielt die konzeptionelle Schwierigkeit. Dadurch wird vermieden, dass Lösungen aus früheren Aufgaben direkt übertragbar sind. Insgesamt entsteht ein klarer Lernpfad von einfachen Eingriffen hin zu realistischeren Schutzmechanismen.*
+*Die beiden Challenges verfolgen das gemeinsame Ziel, Studierende schrittweise an die statische Analyse und das gezielte Patchen von Android-APKs heranzuführen. In der ersten Challenge lernen sie die grundlegende Struktur einer APK kennen und identifizieren einfache Konfigurationsentscheidungen im Manifest oder in den Ressourcen, die das Verhalten der App beeinflussen. Durch einen gezielten Patch wird ein gesperrtes Feature freigeschaltet. Darauf aufbauend erweitert die zweite Challenge dieses Wissen um die Analyse von Entscheidungslogik auf Code-Ebene. Die Studierenden müssen hierbei den Kontrollfluss der Anwendung nachvollziehen und eine zentrale Bedingung im Smali-Code gezielt umkehren, um einen Sicherheitsmechanismus zu umgehen. Die Reihenfolge der Challenges ist didaktisch sinnvoll, da sie von strukturellem Verständnis hin zu logischer Analyse und Manipulation führt. Insgesamt entsteht ein konsistenter Lernpfad von einfachen Konfigurations-Patches hin zu realistischeren Logik-Bypässen.*
 
 ## Übersicht der Challenges
 
-| Nr. | Titel der Challenge | Autor | Schwierigkeit (1-5) | Lernziel (Stichwort) |
-| --- | ------------------- |-------| ------------------- | -------------------- |
-| 1   | APK Anatomy 101         | Felix | ⭐⭐                  | APK-Struktur & Smali-Grundlagen            |
-| 2   | License Logic            | Simon | ⭐⭐⭐                 | Statische Analyse von Entscheidungslogik              |
-| 3   | Trust, but Verify        | Iulia | ⭐⭐⭐⭐⭐                | Zustandsbasierte Schutzmechanismen & Konsistenzanalyse                 |
+| Nr. | Titel der Challenge | Autor | Schwierigkeit (1-5) | Lernziel (Stichwort)                      |
+| --- |---------------------|-------| ------------------- |-------------------------------------------|
+| 1   | "Debug"-Schalter    | Simon | ⭐⭐                  | APK-Struktur verstehen                    |
+| 2   | Logik-Umkehr        | Felix | ⭐⭐⭐                 | Smali-Code lesen und Bedingungen umkehren |
 
 
 ---
