@@ -1,6 +1,6 @@
 name: Static Analysis and Patching Module
 challenges:
-  - id: Challenge_01_static
-    name: Static Example
+  - id: Challenge_01_dynamic
+    name: Anatomy Puzzle
   - id: Challenge_02_dynamic
     name: Logik-Umkehr

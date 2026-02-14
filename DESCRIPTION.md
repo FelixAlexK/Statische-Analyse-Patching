@@ -1,9 +1,9 @@
-## Modulbeschreibung: Statische Analyse & Patching
+## Module Description: Static Analysis & Patching
 
-In diesem Modul lernen Studierende, Android-APKs mithilfe statischer Analyse zu verstehen und gezielt zu manipulieren. Im Fokus steht nicht das Ausführen oder Instrumentieren von Apps, sondern das Lesen, Analysieren und Patchen von bestehendem Code.
+In this module, students learn how to understand and deliberately manipulate Android APKs using static analysis. The focus is not on executing or instrumenting apps, but on reading, analyzing, and patching existing code.
 
-Die erste Challenge vermittelt grundlegende Kenntnisse über den Aufbau einer APK und zeigt, wie Konfigurationsentscheidungen im Manifest oder in Ressourcen das Verhalten einer App beeinflussen. Durch einen einfachen Patch wird ein gesperrtes Feature freigeschaltet.
+The first challenge introduces the fundamental structure of an APK and demonstrates how configuration decisions in the manifest or resources influence an app’s behavior. Through a simple patch, a locked feature is unlocked.
 
-Darauf aufbauend führt die zweite Challenge in die Analyse von Entscheidungs- und Lizenzlogik ein. Hier müssen die Studierenden den Kontrollfluss der Anwendung im Smali-Code nachvollziehen und gezielt verändern, um einen Sicherheitsmechanismus zu umgehen. Das korrekte Verhalten wird dabei nicht durch das Finden eines geheimen Schlüssels erreicht, sondern durch das bewusste Manipulieren der Entscheidungslogik.
+Building on this, the second challenge introduces the analysis of decision and license logic. Students must trace the application’s control flow in the Smali code and deliberately modify it in order to bypass a security mechanism. The correct behavior is not achieved by discovering a secret key, but by intentionally manipulating the decision logic.
 
-Das Modul führt schrittweise von einfachen strukturellen Eingriffen hin zu realistischeren Logik-Bypässen und vermittelt zentrale Techniken der statischen Analyse und des Android-Reverse-Engineerings.
+The module gradually progresses from simple structural modifications to more realistic logic bypasses and teaches core techniques of static analysis and Android reverse engineering.
