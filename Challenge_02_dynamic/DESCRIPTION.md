@@ -1,7 +1,7 @@
-Die Entwickler dieser Android-App sind überzeugt, ihr Login sei absolut sicher.
-Benutzername und Passwort werden mit moderner Kryptographie geprüft – ein direkter Angriff scheint aussichtslos.
+The developers of this Android app are convinced that their login is absolutely secure.
+The username and password are verified using modern cryptography — a direct attack seems hopeless.
 
-Doch Sicherheit besteht nicht nur aus Kryptographie.
-Irgendwo muss entschieden werden, ob ein Login erfolgreich ist oder nicht.
+But security is not only about cryptography.
+Somewhere, a decision must be made whether a login is successful or not.
 
-Deine Aufgabe ist es, diese Entscheidung zu beeinflussen.
+Your task is to influence that decision.

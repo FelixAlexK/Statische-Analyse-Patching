@@ -1,22 +1,22 @@
-# Challenge: Logik-Umkehr
+# Challenge: Logic Reversal
 
-**Schwierigkeit:** ⭐⭐⭐☆☆
-**Kategorie:** Statische Analyse und Patching
+**Difficulty:** ⭐⭐⭐☆☆  
+**Category:** Static Analysis and Patching
 
-## Szenario
-*Die Entwickler dieser App sind überzeugt, ihr Login sei absolut sicher.
-Benutzername und Passwort werden mit moderner Kryptographie geprüft – ein direkter Angriff scheint aussichtslos.*
+## Scenario
+*The developers of this app are convinced that their login is absolutely secure.  
+Username and password are verified using modern cryptography — a direct attack seems hopeless.*
 
-*Aber Sicherheit steht und fällt nicht mit Kryptographie allein.
-Irgendwo muss entschieden werden, ob Erfolg oder Misserfolg eintritt.*
+*But security does not depend on cryptography alone.  
+Somewhere, a decision must be made whether success or failure occurs.*
 
-## Deine Aufgabe
-1.  Installiere die App `app-release.apk`.
-2.  Analysiere die App statisch mit geeigneten Reverse-Engineering-Tools.
-3.  Manipuliere die App so, dass ein beliebiger Login akzeptiert wird. 
-4.  Erhalte das Flag, das bei einem erfolgreichen Login ausgegeben wird.
+## Your Task
+1. Install the app `app-release.apk`.
+2. Analyze the app statically using suitable reverse engineering tools.
+3. Manipulate the app so that any login is accepted.
+4. Obtain the flag that is displayed after a successful login.
 
-## Hinweise (Optional)
-* Tipp 1: Achte auf Stellen im Code, an denen zwischen Login erfolgreich und Login fehlgeschlagen unterschieden wird.
-* Tipp 2: Nicht die Überprüfung selbst ist entscheidend, sondern die Bedingung, die danach ausgewertet wird.
-* Tipp 3: Eine sehr kleine Änderung im Smali-Code kann ausreichen, um den Kontrollfluss zu verändern.
+## Hints (Optional)
+* Hint 1: Pay attention to locations in the code where the application distinguishes between successful and failed login.
+* Hint 2: The verification itself is not the key — the condition evaluated afterward is what matters.
+* Hint 3: A very small change in the Smali code may be enough to alter the control flow.
